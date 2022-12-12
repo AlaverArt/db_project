@@ -48,7 +48,3 @@ insert into product (id_product, name, exp_date_in_days, id_unit_meas, id_vendor
 values (8, 'Чипсы Lays с крабом', 970, 1 /*шт*/, 5 /*Lays*/, 'Lays', 'Россия', '200-100-150', '4203800829743');
 insert into product (id_product, name, exp_date_in_days, id_unit_meas, id_vendor, name_vendor, country_vendor, sizes, barcode)
 values (9, 'Картофель', 60, 2 /*кг*/, 3 /*Fruct*/, 'Fruct', 'Россия', '800-800-800', '3003800829874');
-
-/*select * from product;
-select * from unit_measurement;
-drop table product;*/
