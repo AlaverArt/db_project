@@ -4,7 +4,7 @@ drop table if exists unit_measurement; -- Для быстрого перенак
 --
 create table unit_measurement (
 	id_unit_measurement int, 		 	  -- Id
-	name 				varchar not null, -- Наименование единицы измерения
+	name                varchar not null, -- Наименование единицы измерения
 	constraint unit_measurement_pk primary key (id_unit_measurement)
 );
 -- DML unit_measurement
@@ -19,7 +19,7 @@ create table product (
 	name             varchar not null, -- наименование
 	exp_date_in_days int     not null, -- технический срок годности
 	id_unit_meas     int     not null, -- единица измерения
-	id_vendor 	     int,              -- производитель / изготовитель
+	id_vendor        int,              -- производитель / изготовитель
 	name_vendor      varchar,          -- название компании производителя
 	country_vendor   varchar,          -- страна производителя
 	sizes            varchar,          -- 'height-width-length' (миллиметры)
