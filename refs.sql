@@ -1,3 +1,6 @@
+-- Скрипт перенакатываемый, можно выделить всё и выполнить чтобы пересоздать все справочники
+-- (если коненчо у вас на них ничего не ссылается)
+
 -- Справочник "Единицы измерения"
 drop table if exists product; -- Для быстрого перенаката всего скрипта
 drop table if exists unit_measurement; -- Для быстрого перенаката всего скрипта
@@ -116,6 +119,8 @@ create table payment (
 	constraint payment_fk1 foreign key (id_rate) references rate (id_rate),
 	constraint payment_fk2 foreign key (id_job) references job (id_job)
 );
+create index payment_i1 on payment (id_rate);
+create index payment_i2 on payment (id_job);
 -- DML payment
 -- кладовщик
 insert into payment (id_payment, id_rate, id_job, hours_per_month, min_salary, max_salary)
@@ -175,6 +180,9 @@ create table employee (
 	constraint employee_fk2 foreign key (id_job) references job (id_job),
 	constraint employee_fk3 foreign key (id_payment) references payment (id_payment)
 );
+create index employee_i1 on employee (id_role);
+create index employee_i2 on employee (id_job);
+create index employee_i3 on employee (id_payment);
 -- DML employee
 -- 3 кладовщика
 insert into employee (id_employee, fio, pass_info, birthday, id_job, id_payment, salary, login, pass, id_role, phone, personal_phone, email)
