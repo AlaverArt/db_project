@@ -48,8 +48,8 @@ insert into product (id_product, name, exp_date_in_days, id_unit_meas, id_vendor
 values (8, 'Чипсы Lays с крабом', 970, 1 /*шт*/, 5 /*Lays*/, 'Lays', 'Россия', '200-100-150', '4203800829743');
 insert into product (id_product, name, exp_date_in_days, id_unit_meas, id_vendor, name_vendor, country_vendor, sizes, barcode)
 values (9, 'Картофель', 60, 2 /*кг*/, 3 /*Fruct*/, 'Fruct', 'Россия', '800-800-800', '3003800829874');
-
-
+--
+--
 drop table if exists employee;
 drop table if exists role;
 drop table if exists payment;
@@ -57,12 +57,11 @@ drop table if exists rate;
 drop table if exists job;
 -- Справочник "Роли" (в эл. системе)
 create table role (
-	id_role int, -- Id
-	name varchar, -- наименование
-	description varchar, -- описание
+	id_role     int,              -- Id
+	name        varchar not null, -- наименование
+	description varchar,          -- описание
 	constraint role_pk primary key (id_role)
 );
-
 -- DML role
 insert into role (id_role, name, description)
 values (1, 'Сотрудник', 'Видит и редактирует почти всё');
@@ -71,9 +70,9 @@ values (2, 'Директор', 'Видит и редактирует ВСЁ');
 
 -- Справочник "Должности"
 create table job (
-	id_job int, -- Id
-	name varchar, -- наименование
-	description varchar, -- описание
+	id_job      int,              -- Id
+	name        varchar not null, -- наименование
+	description varchar,          -- описание
 	constraint job_pk primary key (id_job)
 );
 -- DML job
@@ -88,8 +87,8 @@ values (4, 'Директор', 'Самая важная работа');
 
 -- справочник "Ставки"
 create table rate (
-	id_rate int, -- Id
-	name varchar,
+	id_rate int,              -- Id
+	name    varchar not null, -- наименование
 	constraint rate_pk primary key (id_rate)
 );
 -- DML rate
@@ -104,12 +103,12 @@ values (4, '1.0');
 
 -- Справочник "Отлата-часы"
 create table payment (
-	id_payment int,
-	id_rate int,
-	id_job int,
-	hours_per_month int,
-	min_salary int,
-	max_salary int,	
+	id_payment      int,          -- Id
+	id_rate         int,          -- код ставки
+	id_job          int,          -- код должности
+	hours_per_month int not null, -- кол-во часов в месяц (1.0 ставки)
+	min_salary      int not null, -- мин. зарплата (RUB)
+	max_salary      int,          -- макс. зарплата (RUB)
 	-- возможно для отслеживания стоит создать таблицу payment_history, но мб и держать это здесь
 	/*start_date date,
 	end_date date*/
@@ -157,20 +156,20 @@ values (16, 4, 4, 160, 50000, 100000);
 
 -- Справочник "Сотрудники"
 create table employee (
-	id_employee int, -- Id
-	fio varchar, -- фио
-	pass_info varchar, -- паспортные данные. Пока строка. Возможно будет fk id на таблицу паспортов (Команда HR решит)
-	birthday date, -- дата рождения
-	id_job int, -- код должности fk
-	id_payment int, -- код "отплата-часы" fk
-	salary int, -- зарплата (RUB)
-	--id_department int, -- подразделение /* какое подразделение, если ИС для ОДНОГО магазина??? */
-	login varchar, -- логин
-	pass varchar, -- хэш пароля
-	id_role int, -- роль в системе
-	phone varchar, -- рабочий телефон
-	personal_phone varchar, -- личный телефон
-	email varchar, -- эл. почта
+	id_employee    int, -- Id
+	fio            varchar not null, -- фио
+	pass_info      varchar not null, -- паспортные данные. Пока строка. Возможно будет fk id на таблицу паспортов (Команда HR решит)
+	birthday       date,             -- дата рождения
+	id_job         int,              -- код должности fk
+	id_payment     int,              -- код "отплата-часы" fk
+	salary         int     not null, -- зарплата (RUB)
+	--id_department  int,              -- подразделение /* какое подразделение, если ИС для ОДНОГО магазина??? */
+	login          varchar not null, -- логин
+	pass           varchar not null, -- хэш пароля
+	id_role        int     not null, -- роль в системе
+	phone          varchar,          -- рабочий телефон
+	personal_phone varchar,          -- личный телефон
+	email          varchar,          -- эл. почта
 	constraint employee_pk primary key (id_employee),
 	constraint employee_fk1 foreign key (id_role) references role (id_role),
 	constraint employee_fk2 foreign key (id_job) references job (id_job),
